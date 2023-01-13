@@ -1,5 +1,7 @@
-import React from "react";
-import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
+
 import ContactForm from "./ContactForm";
 
 
@@ -8,16 +10,52 @@ describe('Test: CF comp exists?', () => {
         render(<ContactForm/>);
     })
 
-    test('user can fill out and submit form', () => {
+    test('Renders contact form header', () => {
         //Arrange
-            //render out component
         render(<ContactForm/>);
+
         //Act
-            //query each input
-        const firstNameInput = screen.getByLabelText(/first name*/i)
-        const lastNameInput = screen.getByLabelText(/last name*/i)
-        const emailInput = screen.getByLabelText(/email*/i)
-        const messageInput = screen.getByLabelText(/message/i)
+        //query/get each input
+        const headerElement = screen.queryByText(/contact form/i);
+            // console.log(headerElement);
+    
+        //Assert
+        //test that form input exists on page
+            //3 things to test - in doc, t/f, have specific text
+        expect(headerElement).toBeInTheDocument();
+        expect(headerElement).toBeTruthy();
+        expect(headerElement).toHaveTextContent(/contact form/i);
+    })
+
+    test('Renders ONE error message if user enters more than 3 characters into the firstname field', async () => {
+        render(<ContactForm/>);
+
+        const firstNameField = screen.getByPlaceholderText('Edd');
+        //trigger state change by adding text
+        await userEvent.type(firstNameField, "1234");
+        //account for promise. by test id so we dont
+        const errorMessages = await screen.findAllByTestId('error');
+        // console.log(errorMessages);
+        expect(errorMessages).toHaveLength(1);
+    });
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+    //     const lastNameInput = screen.getByLabelText(/last name*/i)
+    //     const emailInput = screen.getByLabelText(/email*/i)
+    //     const messageInput = screen.getByLabelText(/message/i)
             // // put a value for each input
 
         // fireEvent.change(firstNameInput)
@@ -25,7 +63,4 @@ describe('Test: CF comp exists?', () => {
 
             //fill out form elements
             //click button
-        //Assert
-            //test that form input exists on page
-    })
-})
+    
