@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 
 const ContactForm = () => {
-  const [data, setData] = useState();
-  const { register, errors, handleSubmit } = useForm({
-    mode: "onBlur",
-  });
-  const onSubmit = (data) => {
-    setData(data);
+  const [data, setData] = useState(null);
+
+  const {register, handleSubmit, errors } = useForm();
+
+  const submitForm = (data, e) => {
+    console.log('data:', data)
+    setData(data)
   };
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(submitForm)}>
         <div>
           <label htmlFor="firstName">First Name*</label>
           <input
@@ -42,8 +43,9 @@ const ContactForm = () => {
           <label htmlFor="email">
             Email*
           </label>
-          <input name="email" 
-            id="lastName"
+          <input 
+            name="email" 
+            id="email"
             placeholder="bluebill1049@hotmail.com"
             ref={register({ required: true })} 
           />
