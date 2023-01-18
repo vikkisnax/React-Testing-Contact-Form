@@ -20,6 +20,7 @@ const ContactForm = () => {
   const [form, setForm] = useState(formData);
   const [errors, setErrors] = useState(errorData);
 
+  //validation - Regex
   const errorHandling = (fieldName, fieldValue) => {
     if (fieldName === "firstName" && fieldValue.length < 5)
       return `${fieldName} must have at least 5 characters.`;
