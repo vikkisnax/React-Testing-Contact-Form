@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
+import ContactForm from './components/ContactForm';
 
-import ContactForm from "./components/ContactForm";
-
-export default function App() {
+const App = () => {
   return (
-    <div className="App">
-      <ContactForm />
-    </div>
-  );
+      <div className="App">
+        <ContactForm />
+      </div>
+  )
 }
+
+export default App;
